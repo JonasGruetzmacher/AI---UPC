@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1669420366",
+        "python_version": "3.6.13 |Anaconda, Inc.| (default, Mar 16 2021, 11:37:27) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\jonas\\anaconda3\\envs\\MLT-Agent\\Scripts\\mlagents-learn config/Ghost.yaml",
+        "mlagents_version": "0.28.0",
+        "mlagents_envs_version": "0.28.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.10.2+cpu",
+        "numpy_version": "1.19.5",
+        "end_time_seconds": "1669420400"
+    },
+    "total": 34.5482764,
+    "count": 1,
+    "self": 0.013042099999999834,
+    "children": {
+        "run_training.setup": {
+            "total": 0.0971586,
+            "count": 1,
+            "self": 0.0971586
+        },
+        "TrainerController.start_learning": {
+            "total": 34.4380757,
+            "count": 1,
+            "self": 0.0001464000000055421,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 34.437918599999996,
+                    "count": 1,
+                    "self": 34.437918599999996
+                },
+                "TrainerController._save_models": {
+                    "total": 1.069999999714355e-05,
+                    "count": 1,
+                    "self": 1.069999999714355e-05
+                }
+            }
+        }
+    }
+}
