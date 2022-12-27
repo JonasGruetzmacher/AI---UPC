@@ -94,7 +94,7 @@ public class GhostAgent : Agent
         if(transform.localPosition.x < bounds.x || transform.localPosition.z < bounds.y || 
             transform.localPosition.x > bounds.z || transform.localPosition.z > bounds.w)
         {
-            AddReward(-1);
+            AddReward(-100);
             EndEpisode();
         }
 

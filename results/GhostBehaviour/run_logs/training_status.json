@@ -2,22 +2,22 @@
     "GhostBehaviour": {
         "checkpoints": [
             {
-                "steps": 312441,
-                "file_path": "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-312441.onnx",
+                "steps": 54208,
+                "file_path": "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-54208.onnx",
                 "reward": null,
-                "creation_time": 1669915917.8178408,
+                "creation_time": 1672167218.4013574,
                 "auxillary_file_paths": [
-                    "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-312441.pt"
+                    "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-54208.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 312441,
+            "steps": 54208,
             "file_path": "results\\GhostBehaviour\\GhostBehaviour.onnx",
             "reward": null,
-            "creation_time": 1669915917.8178408,
+            "creation_time": 1672167218.4013574,
             "auxillary_file_paths": [
-                "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-312441.pt"
+                "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-54208.pt"
             ]
         }
     },

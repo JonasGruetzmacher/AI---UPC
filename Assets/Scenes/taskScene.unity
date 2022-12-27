@@ -308,6 +308,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 861172001, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_RayLength
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 861172001, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_MaxRayDegrees
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 861172001, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_RaysPerDirection
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 861172001, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_DetectableTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 861172001, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_DetectableTags.Array.data[0]
+      value: Villager
+      objectReference: {fileID: 0}
+    - target: {fileID: 861172001, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_DetectableTags.Array.data[1]
+      value: Hide
+      objectReference: {fileID: 0}
     - target: {fileID: 1645123112549068145, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.2
@@ -363,6 +387,10 @@ PrefabInstance:
     - target: {fileID: 7177386948099823915, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040659458034094132, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
+      propertyPath: m_BrainParameters.NumStackedVectorObservations
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d8865e6cbcbd83438422af94af154c7, type: 3}
