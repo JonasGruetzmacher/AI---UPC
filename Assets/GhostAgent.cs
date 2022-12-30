@@ -5,12 +5,11 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using Unity.VisualScripting;
+using UnityEngine.AI;
 
 public class GhostAgent : Agent
 {
     Rigidbody body;
-    [SerializeField] float runSpeed;
-    [SerializeField] Vector4 bounds;
 
     [SerializeField] Transform[] targets;
     void Start()
@@ -28,49 +27,18 @@ public class GhostAgent : Agent
         {
             this.body.angularVelocity = Vector3.zero;
             this.body.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(-7.7f, -0.497f, -18.3f);
+            this.transform.localPosition = new Vector3(-4.6f, -0f, 5.7f);
         }
 
         // Move the target to a new spot
         Target = targets[Random.Range(0, targets.Length - 1)];
 
-        minDis = Vector3.Distance(this.transform.position, Target.position);
+        
+        minDis = Vector3.Distance(this.transform.localPosition, Target.localPosition);
         Timer = 0;
 
     }
 
-    public void MoveAgent(ActionSegment<int> act)
-    {
-        var dirToGo = Vector3.zero;
-        var rotateDir = Vector3.zero;
-
-        var action = act[0];
-
-        switch (action)
-        {
-            case 1:
-                dirToGo = transform.forward * 1f;
-                break;
-            case 2:
-                dirToGo = transform.forward * -1f;
-                break;
-            case 3:
-                rotateDir = transform.up * 0.5f;
-                break;
-            case 4:
-                rotateDir = transform.up * -0.5f;
-                break;
-            case 5:
-                dirToGo = transform.right * -0.75f;
-                break;
-            case 6:
-                dirToGo = transform.right * 0.75f;
-                break;
-        }
-        transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
-        body.AddForce(dirToGo * runSpeed, ForceMode.VelocityChange);
-
-    }
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -81,54 +49,39 @@ public class GhostAgent : Agent
         // Agent velocity
         sensor.AddObservation(body.velocity.x);
         sensor.AddObservation(body.velocity.z);
-
-        sensor.AddObservation(new Vector2( bounds.x, bounds.y));
-        sensor.AddObservation(new Vector2(bounds.y, bounds.w));
+        sensor.AddObservation(body.angularVelocity);
     }
 
     public float forceMultiplier = 10;
+    public float dragMultiplier = 5;
 
     public float Timer;
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        if(transform.localPosition.x < bounds.x || transform.localPosition.z < bounds.y || 
-            transform.localPosition.x > bounds.z || transform.localPosition.z > bounds.w)
+        // Actions, size = 2
+        body.AddForce(transform.forward * actionBuffers.ContinuousActions[0] * forceMultiplier * Time.timeScale);
+        body.AddTorque(transform.up * actionBuffers.ContinuousActions[1] * dragMultiplier * Time.timeScale);
+
+        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
+
+        if(minDis - distanceToTarget >= 1)
         {
-            AddReward(-100);
-            EndEpisode();
+            AddReward(0.1f);
+            Debug.Log("closer!");
+            minDis = distanceToTarget;
         }
-
-        MoveAgent(actionBuffers.DiscreteActions);
-        
-        // Rewards
-        float distanceToTarget = Vector3.Distance(this.transform.position, Target.position);
-        /*
-        // Reached target
-        if (distanceToTarget < 2f)
-        {
-            AddReward(1.0f);
-            EndEpisode();
-        }
-
-        if (distanceToTarget < minDis)
-        {
-            AddReward(0.01f);
-            distanceToTarget = minDis;
-        }*/
-
-        AddReward(minDis - distanceToTarget);
-        minDis = distanceToTarget;
 
         if (distanceToTarget < 2f)
         {
-            AddReward(20.0f);
-            Target = targets[Random.Range(0, targets.Length - 1)];
+            SetReward(50.0f);
             
+            Target = targets[Random.Range(0, targets.Length - 1)];
+            EndEpisode();
 
         }
-        // Fell off platform
-        else if (this.transform.localPosition.y < -1.5f)
+        if (transform.localPosition.y < -2)
         {
+            SetReward(-10);
             EndEpisode();
         }
 
@@ -142,36 +95,35 @@ public class GhostAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.transform.parent.name.Contains("BaseTiles"))
-            AddReward(-5f);
+        if (other.transform.tag == ("Villager") ||
+            other.transform.tag == ("Object") ||
+            other.transform.tag == ("Hide") ||
+            other.transform.tag == ("Bench"))
+        {
+            Debug.Log("Test");
+            AddReward(-1f);
+            EndEpisode();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.transform.parent.name.Contains("BaseTiles"))
-            EndEpisode();
-            AddReward(-5f);
+        if (collision.transform.tag == ("Villager") ||
+            collision.transform.tag == ("Object") ||
+            collision.transform.tag == ("Hide") ||
+            collision.transform.tag == ("Bench"))
+        {
+            Debug.Log("Test");
+            AddReward(-1f);
+            EndEpisode();        
+        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        var discreteActionsOut = actionsOut.DiscreteActions;
-        if (Input.GetKey(KeyCode.D))
-        {
-            discreteActionsOut[0] = 3;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            discreteActionsOut[0] = 1;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            discreteActionsOut[0] = 4;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            discreteActionsOut[0] = 2;
-        }
+        var continousActionsOut = actionsOut.ContinuousActions;
+        continousActionsOut[1] = Input.GetAxis("Horizontal");
+        continousActionsOut[0] = Input.GetAxis("Vertical");
     }
 
     private void OnDrawGizmos()

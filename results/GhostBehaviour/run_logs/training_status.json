@@ -2,28 +2,28 @@
     "GhostBehaviour": {
         "checkpoints": [
             {
-                "steps": 54208,
-                "file_path": "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-54208.onnx",
+                "steps": 155707,
+                "file_path": "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-155707.onnx",
                 "reward": null,
-                "creation_time": 1672167218.4013574,
+                "creation_time": 1672267988.6425045,
                 "auxillary_file_paths": [
-                    "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-54208.pt"
+                    "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-155707.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 54208,
+            "steps": 155707,
             "file_path": "results\\GhostBehaviour\\GhostBehaviour.onnx",
             "reward": null,
-            "creation_time": 1672167218.4013574,
+            "creation_time": 1672267988.6425045,
             "auxillary_file_paths": [
-                "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-54208.pt"
+                "results\\GhostBehaviour\\GhostBehaviour\\GhostBehaviour-155707.pt"
             ]
         }
     },
     "metadata": {
         "stats_format_version": "0.3.0",
-        "mlagents_version": "0.28.0",
-        "torch_version": "1.10.2+cpu"
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cpu"
     }
 }
