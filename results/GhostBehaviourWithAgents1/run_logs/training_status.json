@@ -1,0 +1,29 @@
+{
+    "GhostBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 69319,
+                "file_path": "results\\GhostBehaviourWithAgents1\\GhostBehaviour\\GhostBehaviour-69319.onnx",
+                "reward": null,
+                "creation_time": 1672959777.1061244,
+                "auxillary_file_paths": [
+                    "results\\GhostBehaviourWithAgents1\\GhostBehaviour\\GhostBehaviour-69319.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 69319,
+            "file_path": "results\\GhostBehaviourWithAgents1\\GhostBehaviour.onnx",
+            "reward": null,
+            "creation_time": 1672959777.1061244,
+            "auxillary_file_paths": [
+                "results\\GhostBehaviourWithAgents1\\GhostBehaviour\\GhostBehaviour-69319.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cpu"
+    }
+}

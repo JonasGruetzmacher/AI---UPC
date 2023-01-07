@@ -22,20 +22,13 @@ public class GhostAgent : Agent
     public float minDis;
     public override void OnEpisodeBegin()
     {
-        // If the Agent fell, zero its momentum
-        if (this.transform.localPosition.y < 0)
-        {
-            this.body.angularVelocity = Vector3.zero;
-            this.body.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(-4.6f, -0f, 5.7f);
-        }
+        this.transform.localPosition = new Vector3(Random.Range(-33,-13), 0, Random.Range(-37,-18));
 
         // Move the target to a new spot
-        Target = targets[Random.Range(0, targets.Length - 1)];
+        //Target = targets[Random.Range(0, targets.Length - 1)];
+        Target.transform.localPosition = new Vector3(Random.Range(-33, -13), 0, Random.Range(-37, -18));
 
-        
         minDis = Vector3.Distance(this.transform.localPosition, Target.localPosition);
-        Timer = 0;
 
     }
 
@@ -46,61 +39,48 @@ public class GhostAgent : Agent
         sensor.AddObservation(Target.localPosition);
         sensor.AddObservation(this.transform.localPosition);
 
-        // Agent velocity
-        sensor.AddObservation(body.velocity.x);
-        sensor.AddObservation(body.velocity.z);
-        sensor.AddObservation(body.angularVelocity);
     }
 
-    public float forceMultiplier = 10;
-    public float dragMultiplier = 5;
-
     public float Timer;
+    public float moveSpeed = 1f;
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        // Actions, size = 2
-        body.AddForce(transform.forward * actionBuffers.ContinuousActions[0] * forceMultiplier * Time.timeScale);
-        body.AddTorque(transform.up * actionBuffers.ContinuousActions[1] * dragMultiplier * Time.timeScale);
+        float moveX = actionBuffers.ContinuousActions[0];
+        float moveZ = actionBuffers.ContinuousActions[1];
 
+        if (moveX != 0 && moveZ != 0)
+            transform.forward = new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+
+        transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+        
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
 
-        if(minDis - distanceToTarget >= 1)
+        if (minDis - distanceToTarget >= 1)
         {
             AddReward(0.1f);
-            Debug.Log("closer!");
+            minDis = distanceToTarget;
+        }
+
+        if (minDis - distanceToTarget <= -1)
+        {
+            Debug.Log(GetCumulativeReward());
+            AddReward(-0.1f);
             minDis = distanceToTarget;
         }
 
         if (distanceToTarget < 2f)
         {
-            SetReward(50.0f);
-            
-            Target = targets[Random.Range(0, targets.Length - 1)];
+            SetReward(5.0f);      
             EndEpisode();
 
         }
-        if (transform.localPosition.y < -2)
-        {
-            SetReward(-10);
-            EndEpisode();
-        }
-
-        if (Timer > 180)
-        {
-            EndEpisode();
-        }
-        Timer += Time.deltaTime;
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == ("Villager") ||
-            other.transform.tag == ("Object") ||
-            other.transform.tag == ("Hide") ||
-            other.transform.tag == ("Bench"))
+        if (other.TryGetComponent<Wall>(out Wall wall) ||
+            other.TryGetComponent<Avoid>(out Avoid avoid))
         {
-            Debug.Log("Test");
             AddReward(-1f);
             EndEpisode();
         }
@@ -108,22 +88,19 @@ public class GhostAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == ("Villager") ||
-            collision.transform.tag == ("Object") ||
-            collision.transform.tag == ("Hide") ||
-            collision.transform.tag == ("Bench"))
+        if (collision.transform.TryGetComponent<Avoid>(out Avoid avoid))
+
         {
-            Debug.Log("Test");
             AddReward(-1f);
-            EndEpisode();        
+            EndEpisode();
         }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continousActionsOut = actionsOut.ContinuousActions;
-        continousActionsOut[1] = Input.GetAxis("Horizontal");
         continousActionsOut[0] = Input.GetAxis("Vertical");
+        continousActionsOut[1] = Input.GetAxis("Horizontal");
     }
 
     private void OnDrawGizmos()
