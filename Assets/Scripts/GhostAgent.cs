@@ -22,7 +22,7 @@ public class GhostAgent : Agent
     public float minDis;
     public override void OnEpisodeBegin()
     {
-        this.transform.localPosition = new Vector3(Random.Range(-33,-13), 0, Random.Range(-37,-18));
+        //this.transform.localPosition = new Vector3(Random.Range(-33,-13), 0, Random.Range(-37,-18));
 
         // Move the target to a new spot
         //Target = targets[Random.Range(0, targets.Length - 1)];
@@ -82,7 +82,7 @@ public class GhostAgent : Agent
             other.TryGetComponent<Avoid>(out Avoid avoid))
         {
             AddReward(-1f);
-            EndEpisode();
+            //EndEpisode();
         }
     }
 
@@ -92,7 +92,7 @@ public class GhostAgent : Agent
 
         {
             AddReward(-1f);
-            EndEpisode();
+            //EndEpisode();
         }
     }
 

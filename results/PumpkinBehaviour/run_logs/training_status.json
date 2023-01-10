@@ -1,0 +1,29 @@
+{
+    "PumpkinBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 487648,
+                "file_path": "results\\PumpkinBehaviour\\PumpkinBehaviour\\PumpkinBehaviour-487648.onnx",
+                "reward": null,
+                "creation_time": 1673301646.13949,
+                "auxillary_file_paths": [
+                    "results\\PumpkinBehaviour\\PumpkinBehaviour\\PumpkinBehaviour-487648.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 487648,
+            "file_path": "results\\PumpkinBehaviour\\PumpkinBehaviour.onnx",
+            "reward": null,
+            "creation_time": 1673301646.13949,
+            "auxillary_file_paths": [
+                "results\\PumpkinBehaviour\\PumpkinBehaviour\\PumpkinBehaviour-487648.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.10.2+cpu"
+    }
+}
