@@ -1,3 +1,4 @@
+using Pada1.BBCore;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,6 +66,12 @@ public class BasicVillager : MonoBehaviour
 
             time -= checkBehaviourTime;
         }
+    }
+
+    public void Flee()
+    {
+        GetComponent<Blackboard>().Set("chased", typeof(bool), true);
+        behaviour = Behaviour.FLEE;
     }
 }
 

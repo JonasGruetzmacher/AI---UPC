@@ -5,22 +5,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Action("wander")]
-[Help("Wander")]
-public class WanderBB : BasePrimitiveAction
+[Action("seek")]
+[Help("Seek from Character")]
+public class SeekBB : BasePrimitiveAction
 {
     [InParam("thisGameObject")]
     [Help("this gameobject")]
     public GameObject thisGameobject;
 
-    [InParam("wanderRadius")]
-    public float wanderRadius;
-
     public override void OnStart()
     {
         BasicVillager basicVillager = thisGameobject.GetComponent<BasicVillager>();
-        basicVillager.behaviour = Behaviour.WANDER;
-        basicVillager.wanderRadius = wanderRadius;
+        basicVillager.behaviour = Behaviour.SEEK;
     }
 
     public override TaskStatus OnUpdate()
