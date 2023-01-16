@@ -55,7 +55,7 @@ public class BasicVillager : MonoBehaviour
                     break;
 
                 case Behaviour.HIDE:
-                    if (agent.remainingDistance < .2f)
+                    //if (agent.remainingDistance < .2f)
                         moves.Hide();
                     break;
 
@@ -68,11 +68,38 @@ public class BasicVillager : MonoBehaviour
         }
     }
 
-    public void Flee()
+    public void FleeFromChaser()
     {
-        GetComponent<Blackboard>().Set("chased", typeof(bool), true);
+        agent.speed = 2f;
         behaviour = Behaviour.FLEE;
     }
+
+    public void HideFromChaser()
+    {
+        agent.speed = 2f;
+        behaviour = Behaviour.HIDE;
+    }
+    
+    public void VillagerWander()
+    {
+        agent.speed = 2f;
+        behaviour = Behaviour.WANDER;
+    }
+
+    public void SeekTarget()
+    {
+        agent.speed = 2f;
+        behaviour = Behaviour.SEEK;
+    }
+
+    public void PursueTarget()
+    {
+        agent.speed = 3.5f;
+        behaviour = Behaviour.SEEK;
+    }
+
+
+
 }
 
 public enum Behaviour

@@ -112,9 +112,9 @@ public class Moves : MonoBehaviour
         for (int i = 0; i < hidingSpots.Length; i++)
         {
             Vector3 hideDir = hidingSpots[i].transform.position - target.transform.position;
-            Vector3 hidePos = hidingSpots[i].transform.position + hideDir.normalized * 100;
+            Vector3 hidePos = hidingSpots[i].transform.position + hideDir.normalized * 3;
 
-            if (Vector3.Distance(target.transform.position, hidePos) < dist)
+            if (Vector3.Distance(this.transform.position, hidePos) < dist)
             {
                 chosenSpot = hidePos;
                 chosenDir = hideDir;
